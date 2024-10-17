@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login Page</title>
+    <style type="text/css">
+        body {
+            font-family:'Courier New', Courier, monospace;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            padding: 20px;
+            background: #333;
+            color: #fff;
+        }
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .container input[type="text"],
+        .container input[type="password"],
+        .container input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .container input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background: #d18db1;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.5s ease; 
+        }
+        .container input[type="submit"]:hover {
+            background: #945676;
+        }
+        .disclaimer {
+            font-size: 0.9em;
+            color: #d9534f; 
+            margin-top: 10px;
+            text-align: center;
+            display: none; 
+        }
+        .Footer {
+            text-align: center;
+            margin-top: 20px;
+            padding:20px;
+            background-color: #333;
+            color: white;
+        }
+        .logo {
+            display: block; 
+            margin: 30px auto; 
+            width: 100px; 
+            height: auto; 
+            border-radius: 50%; 
+            object-fit: cover;
+        }
+        .account-info {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none; 
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease; 
+        }
+        .account-info.show {
+            display: block; 
+            opacity: 1; 
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Welcome to my Website!</h1>
+    </div> 
+
+    <div class="container">   
+        <h2>Login</h2>
+        <img id="profileImage" src="https://i.pinimg.com/564x/64/b9/dd/64b9dddabbcf4b5fb2b885927b7ede61.jpg" class="logo"> 
+        <form id="loginForm">
+            <input type="file" accept="image/*" id="fileInput" name="profilePicture">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" id="passwordInput" name="password" placeholder="Password" required> 
+            <p class="disclaimer" id="disclaimer">Password must be at least 8 characters long and include special characters.</p>
+            <input type="submit" value="Login">
+        </form>
+    </div>
+
+    <div class="account-info" id="accountInfo">
+        <h2>Your Account Information</h2>
+        <p><strong>Username:</strong> <span id="usernameDisplay"></span></p>
+        <p><strong>Profile Picture:</strong></p>
+        <img id="profileImageDisplay" src="" alt="Profile Picture" style="width:100px; height:auto; border-radius:50%;">
+    </div>
+    <div class="Footer">
+        <h3>Maria Sofia Giana L. Navarro | 9-Emerald</h3>
+    </div>
+<!-- the use of AI was used (specifically ChatGPT) to improve this javascript. -->
+    <script>
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profileImage').src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); 
+            const password = document.getElementById('passwordInput').value;
+            const username = document.getElementsByName('username')[0].value;
+            const disclaimer = document.getElementById('disclaimer');
+
+            // Password validation
+            const passwordValid = /^(?=.*[!@#$%^&*])(?=.{8,})/.test(password);
+            if (!passwordValid) {
+                disclaimer.style.display = 'block'; 
+            } else {
+                disclaimer.style.display = 'none'; 
+                
+                const accountInfo = document.getElementById('accountInfo');
+                accountInfo.classList.add('show');
+                document.getElementById('usernameDisplay').textContent = username;
+                document.getElementById('profileImageDisplay').src = document.getElementById('profileImage').src;
+                document.querySelector('.container').style.display = 'none'; 
+            }
+        });
+    </script>
+</body>
+</html>
